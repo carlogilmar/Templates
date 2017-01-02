@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"></meta>
+    <title>Invoice</title>
+  </head>
+
+  <body>
+
+    <table style="border-collapse: collapse; width: 100%; table-layout: fixed; margin-left: 0px;">
+    <tbody>
+    <tr style="height: 120px;">
+    <td style="height: 120px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 6pt;"><img style="display: block; margin-left: auto; margin-right: auto;"
+      src="${logo}" width="132" height="120" /> </span></td>
+    <td style="text-align: center; height: 120px;">
+    <p><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <b>
+        <%
+        print "${emisor.datosFiscales.razonSocial}<br></br>"
+        %>
+      </b>
+      <%
+    print "RFC: ${emisor.datosFiscales.rfc} <br></br>"
+     print "Lugar de Expedición:<br></br>"
+     print emisor.datosFiscales.calle
+     print ", No. ${emisor.datosFiscales.noExterior}, Int. ${emisor.datosFiscales.noInterior} <br></br>"
+     print "${emisor.datosFiscales.colonia} ${emisor.datosFiscales.delegacion} "
+     print "${emisor.datosFiscales.ciudad}, ${emisor.datosFiscales.codigoPostal} <br></br>"
+     print emisor.datosFiscales.pais
+     %>
+    </span>
+    </p>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #000000;">
+    <tbody>
+    <tr style="height: 24px;">
+    <td style="height: 24px;" colspan="3" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">FACTURADO A:</span></td>
+    </tr>
+    <tr style="height: 13px; border: 1px solid #000000;">
+    <td style="height: 13px; border: 1px solid #000000;" rowspan="4"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <%
+      if (betweenIntegrated) {
+        print "${emisor.datosFiscales.razonSocial}"
+        print emisor.datosFiscales.calle
+        print ", No. ${emisor.datosFiscales.noExterior}, Int. ${emisor.datosFiscales.noInterior}"
+        print "${emisor.datosFiscales.colonia} ${emisor.datosFiscales.delegacion}"
+        print emisor.datosFiscales.ciudad
+        print "${emisor.datosFiscales.pais}, ${emisor.datosFiscales.codigoPostal}"
+        print "<br/>RFC: ${emisor.datosFiscales.rfc}"
+      } else {
+        print receptor.datosFiscales.razonSocial
+        print "<br></br>"
+        print receptor.datosFiscales.calle
+        print ", No. ${receptor.datosFiscales.noExterior}, Int. ${receptor.datosFiscales.noInterior}"
+        print "<br />"
+        print "${receptor.datosFiscales.delegacion} ${receptor.datosFiscales.codigoPostal}"
+        print "<br />RFC: ${receptor.datosFiscales.rfc}"
+      }
+      %>
+    </span></td>
+
+    <td style="width: 20%; text-align: right; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">Folio Fiscal:</span></td>
+    <td style="width: 40%; text-align: left; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <% print datosDeFacturacion.uuid ? (datosDeFacturacion.uuid):'No asignado' %></span>
+    </td>
+    </tr>
+    <tr>
+      <td style="width: 20%; text-align: right; height: 13px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">Factura:</span></td>
+      <td style="width: 40%; text-align: left; height: 13px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+        <% print "${datosDeFacturacion.folio}" %></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 20%; text-align: right; height: 13px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">Fecha:</span></td>
+      <td style="width: 40%; text-align: left; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+        <%=Date.parse("yyyy-MM-dd'T'hh:mm:ss", fechaDeCreacion).format("dd-MM-yyyy") %> <%=Date.parse("yyyy-MM-dd'T'hh:mm:ss", fechaDeCreacion).format("hh:mm:ss aaa")%>
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 20%; text-align: right; height: 13px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">Forma de Pago:</span></td>
+      <td style="width: 40%; text-align: left; height: 13px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+        <% print "${datosDeFacturacion.formaDePago}" %></span>
+      </td>
+    </tr>
+    </tbody>
+    </table>
+
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">DESGLOSE:</span>
+    <table style="font-family: Times; border-collapse: collapse; width: 100%; table-layout: fixed; margin-left: 0px; height: 44px;">
+
+    <thead>
+    <tr>
+
+    <td style="width: 7%; text-align: center;" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">Cantidad</span></td>
+    <td style="width: 10%; text-align: center;" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">U. de Medida</span></td>
+    <td style="width: 26%; text-align: center;" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">Descripción</span></td>
+    <td style="width: 10%; text-align: center;" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">P. Unitario</span></td>
+    <td style="width: 10%; text-align: center;" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">Importe</span></td>
+    </tr>
+  </thead>
+<tbody>
+  <%
+  conceptos.eachWithIndex { it, index ->
+    print "<tr>"
+      print "<td style='border: 1px solid #000000; height: 13px; text-align: center;'><span style='font-family: arial, helvetica, sans-serif; font-size: 7pt;'>${it.cantidad}</span></td>"
+      print "<td style='border: 1px solid #000000; height: 13px; text-align: center;'><span style='font-family: arial, helvetica, sans-serif; font-size: 7pt;'>${it.unidad}</span></td>"
+      print "<td style='border: 1px solid #000000; height: 13px; text-align: center;'><span style='font-family: arial, helvetica, sans-serif; font-size: 7pt;'>${it.descripcion}</span></td>"
+      print "<td style='border: 1px solid #000000; height: 13px; text-align: center;'><span style='font-family: arial, helvetica, sans-serif; font-size: 7pt;'>\$ ${new java.text.DecimalFormat('###,##0.00').format(it.valorUnitario.setScale(2, java.math.RoundingMode.HALF_UP))}</span></td>"
+      print "<td style='border: 1px solid #000000; height: 13px; text-align: center;'><span style='font-family: arial, helvetica, sans-serif; font-size: 7pt;'>${new java.text.DecimalFormat('###,##0.00').format((it.cantidad * it.valorUnitario).setScale(2, java.math.RoundingMode.HALF_UP))}</span></td>"
+      print "</tr>"
+  }
+  %>
+
+    </tbody>
+    </table>
+    <p><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></p>
+    <table style="border-collapse: collapse; width: 100%; table-layout: fixed; margin-left: 0px;">
+    <tbody>
+    <tr style="height: 13px;">
+    <td style="width: 60%; text-align: left; height: 13px;" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">CANTIDAD CON LETRA</span></td>
+    <td style="width: 10%; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="width: 11%; text-align: right; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">SUBTOTAL:</span></td>
+    <td style="width: 11%; text-align: center; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <%
+      def subTotal = (conceptos.sum(0) { it.valorUnitario * it.cantidad }).setScale(2, java.math.RoundingMode.HALF_UP)
+      def totalImpuestos = (impuestos.sum(0) { it.importe.toBigDecimal() }).setScale(2, java.math.RoundingMode.HALF_UP)
+      print "\$ ${new java.text.DecimalFormat('###,##0.00').format(subTotal)}"
+      %>
+    </span></td>
+    </tr>
+    <tr style="height: 13px;">
+    <td style="border: 1px solid #000000; height: 13px; width: 41%; text-align: left;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><% print cantidadEnLetras %></span></td>
+    <td style="width: 10%; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="width: 11%; text-align: right; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">2%:</span></td>
+    <td style="width: 11%; text-align: center; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <%
+      print "\$ ${new java.text.DecimalFormat('###,##0.00').format(subTotal*0.02)}"
+      %>
+    </span></td>
+
+    </tr>
+    <tr style="height: 13px;">
+    <td style="width: 60%; text-align: left; height: 13px;" bgcolor="#CEE3F6"><span style="color: #000000; font-family: arial, helvetica, sans-serif; font-size: 7pt;">OBSERVACIONES</span></td>
+    <td style="width: 10%; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="width: 11%; text-align: right; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">I.V.A.:</span></td>
+    <td style="width: 11%; text-align: center; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <%
+      print "\$ ${new java.text.DecimalFormat('###,##0.00').format(totalImpuestos)}"
+      %>
+    </span></td>
+    </tr>
+    <tr style="height: 13px;">
+    <td style="border: 1px solid #000000; height: 13px; width: 41%; text-align: left;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="width: 10%; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="width: 11%; height: 13px; text-align: right;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">TOTAL:</span></td>
+    <td style="width: 11%; height: 13px; text-align: center;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <%
+      print "\$ ${new java.text.DecimalFormat('###,##0.00').format((subTotal + totalImpuestos -(subTotal*0.02) ).setScale(2, java.math.RoundingMode.HALF_UP))}"
+      %>
+    </span></td>
+    </tr>
+    <tr style="height: 61px;">
+    <td style="border: 1px solid #000000; height: 61px; width: 41%; text-align: left;">
+    <p><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">REGIMEN FISCAL: <% print "${receptor.datosFiscales.regimen}" %></span><br />
+      <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">MÉTODO DE PAGO: <% print "${datosDeFacturacion.metodoDePago}" %></span><br />
+      <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">No. DE CUENTA: <% print "${datosDeFacturacion.numeroDeCuentaDePago}" %></span></p>
+    </td>
+    <td style="width: 10%; height: 61px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="width: 11%; height: 61px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="width: 11%; height: 61px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    </tr>
+    </tbody>
+    </table>
+    <p><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></p>
+    <table style="width: 100%;">
+    <tbody>
+    <tr >
+    <td style="width: 767px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>NÚMERO DE SERIE DEL CERTIFICADO DIGITAL:</b> <% print certificadoSAT ? (certificadoSAT):'No asignado' %></span></td>
+    <td style="width: 199px; " rowspan="6"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      <img style="margin-left: auto; margin-right: auto;" src='http://www.qid.company/images/empty_qr.jpg' width="138" height="138" /></span></td>
+    </tr>
+    <tr >
+    <td style="width: 767px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>ESTE DOCUMENTO ES UNA REEPRESENTACIÓN IMPRESA DE UN CFDI</b></span></td>
+    </tr>
+    <tr >
+    <td style="width: 767px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>FECHA Y HORA DE CERTIFICACIÓN:</b> <% print fechaDeCertificacion ? (fechaDeCertificacion):'No asignado' %></span></td>
+    </tr>
+    <tr >
+    <td style="width: 767px; ">
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>CADENA ORIGINAL DEL TIMBRE:</b></span><br></br>
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><% print selloCFDI ? (selloCFDI?.split("(?<=\\G.{90})")?.join(" ")) : 'No asignado' %> </span>
+    </td>
+    </tr>
+    <tr >
+    <td style="width: 767px; ">
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>SELLO ORIGINAL DEL EMISOR:</b></span><br></br>
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><% print complementoSAT ? (complementoSAT?.split("(?<=\\G.{90})")?.join(" ")) : 'No asignado' %> </span>
+    </td>
+    </tr>
+    <tr >
+    <td style="width: 767px; ">
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>SELLO DIGITAL DEL SAT:</b></span><br></br>
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><% print selloSAT ? (selloSAT?.split("(?<=\\G.{90})")?.join(" ")) : 'No asignado' %> </span>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    <p><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></p>
+
+</body>
+</html>
