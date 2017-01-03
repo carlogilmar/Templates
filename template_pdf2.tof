@@ -173,9 +173,10 @@
     <table style="width: 100%;">
     <tbody>
     <tr >
-    <td style="width: 767px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>NÚMERO DE SERIE DEL CERTIFICADO DIGITAL:</b> <% print certificadoSAT ? (certificadoSAT):'No asignado' %></span></td>
-    <td style="width: 199px; " rowspan="6"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
-      <img style="margin-left: auto; margin-right: auto;" src='http://www.qid.company/images/empty_qr.jpg' width="138" height="138" /></span></td>
+    <td style="width: 767px; " colspan="2"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>NÚMERO DE SERIE DEL CERTIFICADO DIGITAL:</b> <% print certificadoSAT ? (certificadoSAT):'No asignado' %></span></td>
+    <td style="width: 199px; " rowspan="6"></td>
+    <td style="width: 199px; text-align:center;" rowspan="6"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+      Código QR</span></td>
     </tr>
     <tr >
     <td style="width: 767px; "><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"><b>ESTE DOCUMENTO ES UNA REEPRESENTACIÓN IMPRESA DE UN CFDI</b></span></td>
