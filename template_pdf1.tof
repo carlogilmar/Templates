@@ -156,7 +156,7 @@ conceptos.eachWithIndex { it, index ->
     %> </span></td>
   </tr>
   <tr>
-  <td style="border: 1px solid #000000; height: 13px; width: 41%; text-align: center;"><span style="font-size: 8pt;"> </span></td>
+  <td style="border: 1px solid #000000; height: 13px; width: 41%; text-align: center;"><span style="font-size: 8pt;"> <% print datosDeFacturacion.observaciones ? (datosDeFacturacion.observaciones):'Sin Observaciones' %> </span></td>
   <td style="width: 11.0194%;"><span style="font-family: 'times new roman', times, serif; font-size: 8pt;"> </span></td>
   <td style="width: 10.9806%;"><span style="font-family: 'times new roman', times, serif; font-size: 8pt;"> </span></td>
   </tr>

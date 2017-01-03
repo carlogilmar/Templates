@@ -154,7 +154,9 @@
     </span></td>
     </tr>
     <tr style="height: 13px;">
-    <td style="border: 1px solid #DF7401; height: 13px; width: 41%; text-align: left;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
+    <td style="border: 1px solid #DF7401; height: 13px; width: 41%; text-align: left;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;">
+    <% print datosDeFacturacion.observaciones ? (datosDeFacturacion.observaciones):'Sin Observaciones' %>
+    </span></td>
     <td style="width: 10%; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
     <td style="width: 11%; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
     <td style="width: 11%; height: 13px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 7pt;"></span></td>
